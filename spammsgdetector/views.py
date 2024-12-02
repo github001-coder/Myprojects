@@ -11,14 +11,17 @@ from django.views.decorators.cache import never_cache
 
 
 nlp = spacy.load("en_core_web_sm")
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+pipeline_path = os.path.join(BASE_DIR, 'spammsgdetector', 'models', 'preprocessing_pipeline.pkl')
+model_path = os.path.join(BASE_DIR, 'spammsgdetector', 'models', 'Logistic_Regression_model.pkl')
+
 # Load preprocessing pipeline
-with open('./spammsgdetector/models/preprocessing_pipeline.pkl', 'rb') as pipeline_file:
+with open(pipeline_path, 'rb') as pipeline_file:
     preprocessing_pipeline = joblib.load(pipeline_file)
 
 # Load trained model
-with open('./spammsgdetector/models/Logistic_Regression_model.pkl', 'rb') as model_file:
+with open(model_path, 'rb') as model_file:
     trained_model = joblib.load(model_file)
-
 
 def text_preprocessing(msg):
     m = msg.lower()
