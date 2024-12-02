@@ -17,7 +17,10 @@ model_path = os.path.join(BASE_DIR, 'spammsgdetector', 'models', 'Logistic_Regre
 
 # Load preprocessing pipeline
 with open(pipeline_path, 'rb') as pipeline_file:
-    preprocessing_pipeline = joblib.load(pipeline_file)
+    try:
+        preprocessing_pipeline = joblib.load(pipeline_file)
+    except (OSError, FileNotFoundError) as e:
+        return JsonResponse({"error": f"Failed to load the preprocessing pipeline: {str(e)}"}, status=500)
 
 # Load trained model
 with open(model_path, 'rb') as model_file:
