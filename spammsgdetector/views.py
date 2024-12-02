@@ -49,7 +49,7 @@ def predict_message(message):
     # Optional: Return a user-friendly result (e.g., "Spam" or "Not Spam")
     
     result = {}
-    if prediction!='N/A' or prediction[0] == 1:
+    if prediction=='N/A' or prediction[0] == 1:
         result['res'] = "Spam"
         result['proba'] = round(trained_model.predict_proba(processed_data)[0][1],2)
     else:
