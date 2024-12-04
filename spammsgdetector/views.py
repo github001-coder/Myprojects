@@ -8,7 +8,6 @@ from nltk.stem import WordNetLemmatizer
 import spacy
 import sklearn
 from django.views.decorators.cache import never_cache
-import os
 import logging
 
 
