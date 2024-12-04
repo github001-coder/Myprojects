@@ -9,6 +9,8 @@ import spacy
 import sklearn
 from django.views.decorators.cache import never_cache
 import os
+import logging
+
 
 nlp = spacy.load("en_core_web_sm")
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -47,7 +49,15 @@ def predict_message(message):
     processed_data = preprocessing_pipeline.transform(input_data)  # Preprocess the message
     prediction = trained_model.predict(processed_data)  # Get the prediction
     # Optional: Return a user-friendly result (e.g., "Spam" or "Not Spam")
-    
+    logger = logging.getLogger(__name__)
+
+    try:
+        prediction = model.predict([message])
+        logger.info(f"Prediction successful: {prediction}")
+    except Exception as e:
+        logger.error(f"Error during prediction: {e}")
+        raise
+
     result = {}
     if prediction[0] == 1:
         result['res'] = "Spam"
