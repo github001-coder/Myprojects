@@ -8,7 +8,7 @@ from nltk.stem import WordNetLemmatizer
 import spacy
 import sklearn
 from django.views.decorators.cache import never_cache
-
+import os
 
 nlp = spacy.load("en_core_web_sm")
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,7 +20,7 @@ with open(pipeline_path, 'rb') as pipeline_file:
     try:
         preprocessing_pipeline = joblib.load(pipeline_file)
     except (OSError, FileNotFoundError) as e:
-        return JsonResponse({"error": f"Failed to load the preprocessing pipeline: {str(e)}"}, status=500)
+        print("erro:failed to load the preprocessing pipeline: {str(e)}")
 
 # Load trained model
 with open(model_path, 'rb') as model_file:
