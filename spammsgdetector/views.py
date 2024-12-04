@@ -42,16 +42,7 @@ def predict_message(message):
     input_data = [message]  # Assuming the pipeline expects a list
     processed_data = preprocessing_pipeline.transform(input_data)  # Preprocess the message
     prediction = trained_model.predict(processed_data)  # Get the prediction
-    # Optional: Return a user-friendly result (e.g., "Spam" or "Not Spam")
-    logger = logging.getLogger(__name__)
-
-    try:
-        prediction = model.predict([message])
-        logger.info(f"Prediction successful: {prediction}")
-    except Exception as e:
-        logger.error(f"Error during prediction: {e}")
-        raise
-
+    
     result = {}
     if prediction[0] == 1:
         result['res'] = "Spam"
